@@ -43,7 +43,7 @@ public class UIManager : MonoBehaviour
                 //Player 1
                 //PlayerController.AllPlayers[0].cam.rect = new Rect(0,0,1,1);
                 PlayerController.AllPlayers[0].SetCameraRect(0, 0, 1, 1);
-                ((RectTransform)PlayerController.AllPlayers[0].PlayerUI.transform).anchorMin = new Vector2(0, 0);sadaaadawada
+                ((RectTransform)PlayerController.AllPlayers[0].PlayerUI.transform).anchorMin = new Vector2(0, 0);
                 ((RectTransform)PlayerController.AllPlayers[0].PlayerUI.transform).anchorMax = new Vector2(1, 1);
                 break;
             case 2:

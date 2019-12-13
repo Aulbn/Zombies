@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class ZombieController : MonoBehaviour
 {
-    public NavMeshAgent agent;
+    [HideInInspector]public NavMeshAgent agent;
 
     public float currentHealth;
     [SerializeField] private float maxHealth;
@@ -13,6 +13,7 @@ public class ZombieController : MonoBehaviour
     public float fov = 75f;
     public float sightRange = 20f;
     public PlayerController target;
+    public float playerDiscovery = 0;
 
     public Animator animator;
     private bool ragdolling = false;
@@ -67,9 +68,32 @@ public class ZombieController : MonoBehaviour
         currentHealth -= damage;
         animator.SetTrigger("Hit");
 
+        Aggro();
+
         if (currentHealth <= 0)
         {
             Die(rigidbody, force);
+        }
+    }
+
+    private void Aggro()
+    {
+        animator.SetBool("Aggressive", true);
+        //Raycast to other Zombies and Aggro them!
+    }
+
+    public void Look()
+    {
+        foreach(PlayerController player in PlayerController.AllPlayers)
+        {
+            if (Vector3.Distance(player.transform.position, transform.position) > sightRange) continue;
+            // IF IN FOV
+            //if (Quaternion.Angle)
+            if (Physics.Raycast(transform.position + Vector3.up, player.transform.position - transform.position, out RaycastHit hit, sightRange))
+            {
+                if (hit.transform != player.transform) continue;
+
+            }
         }
     }
 
