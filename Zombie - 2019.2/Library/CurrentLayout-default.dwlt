@@ -44,7 +44,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 6}
-  m_MinSize: {x: 950, y: 494}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
 MonoBehaviour:
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_MinSize: {x: 143, y: 49}
   m_MaxSize: {x: 4000, y: 4020}
   vertical: 0
-  controlID: 1630
+  controlID: 16
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -141,7 +141,7 @@ MonoBehaviour:
     y: 0
     width: 1920
     height: 997
-  m_MinSize: {x: 950, y: 494}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &7
 MonoBehaviour:
@@ -212,7 +212,7 @@ MonoBehaviour:
   m_MinSize: {x: 917, y: 444}
   m_MaxSize: {x: 22012, y: 10022}
   vertical: 0
-  controlID: 149
+  controlID: 151
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -237,7 +237,7 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 344}
   m_MaxSize: {x: 4002, y: 8044}
   vertical: 1
-  controlID: 114
+  controlID: 94
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_MinSize: {x: 204, y: 444}
   m_MaxSize: {x: 4004, y: 8044}
   vertical: 1
-  controlID: 150
+  controlID: 152
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -558,10 +558,10 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 32}
-      m_SelectedIDs: c84c0000
-      m_LastClickedID: 19656
-      m_ExpandedIDs: 18fbffffc84c0000
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 50fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -647,9 +647,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -2.4234138, y: 1.7586195, z: -2.9863236}
+    m_Target: {x: -1.6681967, y: 2.5830119, z: 2.5003967}
     speed: 2
-    m_Value: {x: -2.4234138, y: 1.7586195, z: -2.9863236}
+    m_Value: {x: -1.6681967, y: 2.5830119, z: 2.5003967}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -678,9 +678,9 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.0033496292, y: 0.99608696, z: -0.044879094, w: -0.079917304}
+    m_Target: {x: -0.08342805, y: -0.5361234, z: 0.05306289, w: -0.83868754}
     speed: 2
-    m_Value: {x: -0.003415917, y: 0.9956666, z: -0.044860534, w: -0.08138688}
+    m_Value: {x: -0.085917026, y: -0.5358006, z: 0.05465596, w: -0.8381817}
   m_Size:
     m_Target: 4.623293
     speed: 2
@@ -1273,20 +1273,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SkipHidden: 0
     m_SearchArea: 1
-    m_Folders:
-    - Assets/Prefabs
+    m_Folders: []
   m_ViewMode: 0
   m_StartGridSize: 64
   m_LastFolders: []
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: E:\ProjectFiles\FPSGunslinger\Zombie - 2019.2
+  m_LastProjectPath: C:\Users\albin.thunstrom\Documents\Unity Projects\Zombies\Zombie
+    - 2019.2
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: d8600000
     m_LastClickedID: 24792
-    m_ExpandedIDs: 00000000e83900001c3b0000963c0000023d00003a3d00008a3d0000283f00000a4200005c420000d24200008e43000082440000fc440000d6450000344700005e470000984700007a480000ba480000d8480000325200003452000036520000385200003a5200003c5200003e520000
+    m_ExpandedIDs: 00000000e2390000143b0000903c0000fc3c0000343d0000843d0000223f00000442000056420000cc420000884300007c440000f6440000d04500002e470000584700009247000074480000b4480000d24800002c5200002e5200003052000032520000345200003652000038520000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1314,7 +1314,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000e83900001c3b0000963c0000023d00003a3d00008a3d0000283f00000a4200005c420000d24200008e43000082440000fc440000d6450000344700005e470000984700007a480000ba480000d8480000325200003452000036520000385200003a5200003c5200003e520000
+    m_ExpandedIDs: ffffffff00000000e2390000143b0000903c0000fc3c0000343d0000843d0000223f00000442000056420000cc420000884300007c440000f6440000d04500002e470000584700009247000074480000b4480000d24800002c5200002e5200003052000032520000345200003652000038520000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1463,7 +1463,7 @@ MonoBehaviour:
   m_PosLeft: {x: 0, y: 0}
   m_PosRight: {x: 0, y: 0}
   m_Scope: 1
-  m_SplitterFlex: 0.077441074
+  m_SplitterFlex: 0.19178082
 --- !u!114 &29
 MonoBehaviour:
   m_ObjectHideFlags: 52
