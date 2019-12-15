@@ -87,8 +87,8 @@ public class ZombieController : MonoBehaviour
         foreach(PlayerController player in PlayerController.AllPlayers)
         {
             if (Vector3.Distance(player.transform.position, transform.position) > sightRange) continue;
-            // IF IN FOV
-            //if (Quaternion.Angle)
+            if (Vector3.Angle(transform.forward, player.transform.position - transform.position) < fov) continue;
+            
             if (Physics.Raycast(transform.position + Vector3.up, player.transform.position - transform.position, out RaycastHit hit, sightRange))
             {
                 if (hit.transform != player.transform) continue;
