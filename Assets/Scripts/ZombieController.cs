@@ -92,7 +92,8 @@ public class ZombieController : MonoBehaviour
         currentHealth -= damage;
         animator.SetTrigger("Hit");
 
-        Aggro();
+        if (!animator.GetBool("Aggressive"))
+            SpreadAggro();
 
         if (currentHealth <= 0)
         {
@@ -109,12 +110,13 @@ public class ZombieController : MonoBehaviour
     {
         Aggro();
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, sightRange, 0);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, sightRange);
+        Debug.Log("Colliders: " + colliders.Length);
         foreach (Collider col in colliders)
         {
-            ZombieController zombie = col.GetComponent<Hitbox>().ZombieParent;
-            if (zombie == null) continue;
-            zombie.Aggro();
+            Hitbox hitbox = col.GetComponent<Hitbox>();
+            if (hitbox == null) continue;
+            hitbox.ZombieParent.Aggro();
         }
     }
 
