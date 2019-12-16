@@ -2,40 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombieAttackBehaviour : StateMachineBehaviour
+public class ZombieIdleBehaviour : StateMachineBehaviour
 {
     private ZombieController controller;
-    private bool hasHit = false;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (controller == null)
-        {
             controller = animator.transform.GetComponentInParent<ZombieController>();
-        }
-        controller.agent.isStopped = true;
-        hasHit = false;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (animator.GetFloat("HitCurve") > 0 && !hasHit)
-        {
-            hasHit = true;
-            controller.Attack();
-        }
+        controller.Look();
 
-        if (Vector3.Distance(controller.transform.position, controller.target.transform.position) > controller.hitRange / 2)
-            animator.SetBool("AttackRange", false);
+        //if (PlayerController.AllPlayers != null)
+        //{
+        //    Debug.DrawRay(controller.transform.position + Vector3.up, ((PlayerController.AllPlayers[0].transform.position + Vector3.down/2) - controller.transform.position).normalized * controller.sightRange, Color.blue);
+        //    Debug.DrawRay(controller.transform.position + Vector3.up, Quaternion.AngleAxis(controller.fov / 2, Vector3.up) * controller.transform.forward * controller.sightRange);
+        //    Debug.DrawRay(controller.transform.position + Vector3.up, Quaternion.AngleAxis(-controller.fov / 2, Vector3.up) * controller.transform.forward * controller.sightRange);
+        //}
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        hasHit = false;
-    }
+    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    //{
+    //    
+    //}
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

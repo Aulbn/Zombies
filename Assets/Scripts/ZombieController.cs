@@ -10,11 +10,16 @@ public class ZombieController : MonoBehaviour
     public float currentHealth;
     [SerializeField] private float maxHealth;
     [SerializeField] private SkinnedMeshRenderer skin;
+    public PlayerController target;
+    public float hitRange = 1f;
+
+    [Header("Sight")]
     public float fov = 75f;
     public float sightRange = 20f;
-    public PlayerController target;
+    public float discoverySpeed = 1f;
+    //[HideInInspector]
     public float playerDiscovery = 0;
-    public float hitRange = 1f;
+
 
     public Animator animator;
     private bool ragdolling = false;
@@ -60,11 +65,11 @@ public class ZombieController : MonoBehaviour
     public void Attack()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position + transform.forward * hitRange / 2, hitRange);
-        Debug.Log("Try hit");
+        //Debug.Log("Try hit");
 
         foreach (Collider col in colliders)
         {
-            Debug.Log("Got colliders");
+            //Debug.Log("Got colliders");
             PlayerController player = col.GetComponent<PlayerController>();
             if (player != null)
             {
@@ -98,21 +103,48 @@ public class ZombieController : MonoBehaviour
     public void Aggro()
     {
         animator.SetBool("Aggressive", true);
-        //Raycast to other Zombies and Aggro them!
+    }
+
+    public void SpreadAggro()
+    {
+        Aggro();
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, sightRange, 0);
+        foreach (Collider col in colliders)
+        {
+            ZombieController zombie = col.GetComponent<Hitbox>().ZombieParent;
+            if (zombie == null) continue;
+            zombie.Aggro();
+        }
     }
 
     public void Look()
     {
+        if (PlayerController.AllPlayers == null) return;
+        bool seen = false;
+
         foreach(PlayerController player in PlayerController.AllPlayers)
         {
             if (Vector3.Distance(player.transform.position, transform.position) > sightRange) continue;
-            if (Vector3.Angle(transform.forward, player.transform.position - transform.position) < fov) continue;
-            
-            if (Physics.Raycast(transform.position + Vector3.up, player.transform.position - transform.position, out RaycastHit hit, sightRange))
+            Vector3 playerDir = ((player.transform.position + Vector3.down / 2) - transform.position).normalized;
+            if (Vector3.Angle(transform.forward, playerDir) > fov / 2) continue;
+
+            if (Physics.Raycast(transform.position + Vector3.up, playerDir, out RaycastHit hit, sightRange))
             {
                 if (hit.transform != player.transform) continue;
 
+                seen = true;
+                playerDiscovery += Time.deltaTime * discoverySpeed * ((sightRange - hit.distance) / sightRange);
+
+                if (playerDiscovery >= 1)
+                    SpreadAggro();
             }
+        }
+
+        if (!seen)
+        {
+            if (playerDiscovery > 0)
+                playerDiscovery -= Time.deltaTime;
         }
     }
 
@@ -150,10 +182,4 @@ public class ZombieController : MonoBehaviour
         }
         Destroy(gameObject);
     }
-
-    //private void Update()
-    //{
-    //    if (currentHealth <= 0 && !ragdolling)
-    //        ToggleRagdoll(true);
-    //}
 }

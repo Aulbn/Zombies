@@ -144,6 +144,8 @@ public class WeaponHandler : MonoBehaviour
     public void Reload()
     {
         if (currentAmmo >= weapon.magSize) return; //Kanske borde kolla ifall man kan skjuta också, så att man inte kan ladda om under en recoil, t.ex.
+
+        if (ReloadCoroutine != null) StopCoroutine(ReloadCoroutine);
         StartCoroutine(ReloadCoroutine = WaitForAction(weapon.reloadTime, () => { currentAmmo = weapon.magSize; owner.PlayerUI.SetAmmoText(this); }));
 
     }

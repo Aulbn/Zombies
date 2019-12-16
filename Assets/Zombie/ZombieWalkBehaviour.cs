@@ -24,6 +24,7 @@ public class ZombieWalkBehaviour : StateMachineBehaviour
     {
         controller.SetTarget();
         controller.agent.SetDestination(controller.target.transform.position);
+        animator.SetFloat("SpeedFactor", controller.agent.velocity.magnitude / controller.agent.speed);
 
         if (Vector3.Distance(controller.transform.position, controller.target.transform.position) < controller.hitRange)
         {
@@ -32,19 +33,19 @@ public class ZombieWalkBehaviour : StateMachineBehaviour
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        controller.agent.isStopped = true;
+    }
 
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
+// OnStateMove is called right after Animator.OnAnimatorMove()
+//override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+//{
+//    // Implement code that processes and affects root motion
+//}
 
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+// OnStateIK is called right after Animator.OnAnimatorIK()
+override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.SetLookAtPosition(eyesPos);
         animator.SetLookAtWeight(1, 0, .8f, 0);

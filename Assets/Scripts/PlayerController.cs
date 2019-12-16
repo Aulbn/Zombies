@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I)) //DEBUG AGGRO ALL IN RANGE - VERY INEFFICIENT!
         {
             Debug.Log("AGGRO!");
-            RaycastHit[] hits = Physics.SphereCastAll(transform.position, aggroRange / 2, transform.forward, 0);
+            RaycastHit[] hits = Physics.SphereCastAll(transform.position, aggroRange / 2, transform.forward, 16);
             foreach(RaycastHit hit in hits)
             {
                 Debug.Log("Try aggro");
