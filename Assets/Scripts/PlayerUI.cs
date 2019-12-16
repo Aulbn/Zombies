@@ -36,7 +36,8 @@ public class PlayerUI : MonoBehaviour
 
     public void SetAmmoText(WeaponHandler weaponHandler)
     {
-        SetAmmoText(weaponHandler.currentAmmo, weaponHandler.weapon.magSize);
+        if (!player.ammoStash.ContainsKey(weaponHandler.weapon.ammoType)) return;
+        SetAmmoText(weaponHandler.currentAmmo, player.ammoStash[weaponHandler.weapon.ammoType]);
     }
     public void SetAmmoText(int currentAmmo, int maxAmmo)
     {

@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Stats")]
     public int health;
+    public int maxHealth = 100;
 
     [Header("Input")]
     public float walkSpeed = 2f;
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
     public float aimZoomSpeed;
     public bool IsAiming { get; private set; }
     public float AimValue { get; private set; }
+    public Dictionary<Weapon.AmmoType, int> ammoStash;
 
     [Header("Aim Assistance")]
     public bool aimAssist = true;
@@ -71,8 +73,10 @@ public class PlayerController : MonoBehaviour
             AllPlayers = new List<PlayerController>();
         playerID = GetComponent<PlayerInput>().playerIndex;
         AllPlayers.Insert(playerID, this);
+        AIDirector.SetInCombat(this, false);
 
         cc = GetComponent<CharacterController>();
+        ammoStash = new Dictionary<Weapon.AmmoType, int>();
 
         bool uh = false; //Needed a bool for some reason
         playerInput = GetComponent<PlayerInput>();
@@ -107,6 +111,8 @@ public class PlayerController : MonoBehaviour
         SetPosition(GameManager.Instance.playerSpawn.position);
 
         AddWeapon(starterWeapon);
+        PickUpAmmo(starterWeapon.ammoType, 50); //Test start ammo
+        PlayerUI.SetAmmoText(activeWeapon);
     }
 
     void Update()
@@ -127,16 +133,11 @@ public class PlayerController : MonoBehaviour
                 Hitbox h = hit.transform.GetComponent<Hitbox>();
                 if (h != null)
                 {
-                    h.ZombieParent.Aggro();
+                    h.ZombieParent.Aggro(this);
                 }
             }
         }
 
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawSphere(transform.position, aggroRange / 2);
     }
 
     private void FixedUpdate()
@@ -360,8 +361,10 @@ public class PlayerController : MonoBehaviour
         PlayerUI.SetAmmoText(activeWeapon);
         armsAnim.SetTrigger("Shoot");
         bodyAnim.SetTrigger("Shoot");
-        camRotY += recoilAmmount;
-        ClampRotation();
+
+        //Recoil
+        //camRotY += recoilAmmount;
+        //ClampRotation();
     }
 
     private void AimToggle()
@@ -418,6 +421,14 @@ public class PlayerController : MonoBehaviour
     {
         AllPlayers.Remove(this);
         Destroy(gameObject);
+    }
+
+    public void PickUpAmmo(Weapon.AmmoType ammoType, int amount)
+    {
+        if (!ammoStash.ContainsKey(ammoType))
+            ammoStash.Add(ammoType, amount);
+        else
+            ammoStash[ammoType] += amount;
     }
 
     //private IEnumerator Recoil(float recoilAmmount)

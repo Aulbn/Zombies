@@ -106,7 +106,7 @@ public class WeaponHandler : MonoBehaviour
             if (hitbox != null)
             {
                 float damageAfterRange = weapon.GetDamage(Vector3.Distance(transform.position, hit.point));
-                hitbox.Damage(damageAfterRange, owner.cam.transform.forward * damageAfterRange * 700);
+                hitbox.Damage(damageAfterRange, owner.cam.transform.forward * damageAfterRange * 700, owner);
             }
         }
     }
@@ -146,7 +146,12 @@ public class WeaponHandler : MonoBehaviour
         if (currentAmmo >= weapon.magSize) return; //Kanske borde kolla ifall man kan skjuta också, så att man inte kan ladda om under en recoil, t.ex.
 
         if (ReloadCoroutine != null) StopCoroutine(ReloadCoroutine);
-        StartCoroutine(ReloadCoroutine = WaitForAction(weapon.reloadTime, () => { currentAmmo = weapon.magSize; owner.PlayerUI.SetAmmoText(this); }));
+        StartCoroutine(ReloadCoroutine = WaitForAction(weapon.reloadTime, () => {
+            int requestAmmo = weapon.magSize - currentAmmo;
+            currentAmmo += Mathf.Min(requestAmmo, owner.ammoStash[weapon.ammoType]);
+            owner.ammoStash[weapon.ammoType] = Mathf.Max(0, owner.ammoStash[weapon.ammoType] - requestAmmo);
+            owner.PlayerUI.SetAmmoText(this);
+        }));
 
     }
 

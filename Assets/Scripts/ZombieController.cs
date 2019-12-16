@@ -65,16 +65,13 @@ public class ZombieController : MonoBehaviour
     public void Attack()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position + transform.forward * hitRange / 2, hitRange);
-        //Debug.Log("Try hit");
-
         foreach (Collider col in colliders)
         {
-            //Debug.Log("Got colliders");
             PlayerController player = col.GetComponent<PlayerController>();
             if (player != null)
             {
                 player.ChangeHealth(-10);
-                Debug.Log("Hit player");
+                //Debug.Log("Hit player");
                 break;
             }
         }
@@ -87,13 +84,13 @@ public class ZombieController : MonoBehaviour
         StartCoroutine(Dissolve(3f));
     }
 
-    public void Damage(float damage, Rigidbody rigidbody, Vector3 force)
+    public void Damage(float damage, Rigidbody rigidbody, Vector3 force, PlayerController player)
     {
         currentHealth -= damage;
         animator.SetTrigger("Hit");
 
         if (!animator.GetBool("Aggressive"))
-            SpreadAggro();
+            SpreadAggro(player);
 
         if (currentHealth <= 0)
         {
@@ -101,22 +98,23 @@ public class ZombieController : MonoBehaviour
         }
     }
 
-    public void Aggro()
+    public void Aggro(PlayerController player)
     {
         animator.SetBool("Aggressive", true);
+        AIDirector.SetInCombat(player, true);
     }
 
-    public void SpreadAggro()
+    public void SpreadAggro(PlayerController player)
     {
-        Aggro();
-
-        Collider[] colliders = Physics.OverlapSphere(transform.position, sightRange);
-        Debug.Log("Colliders: " + colliders.Length);
+        Aggro(player);
+        int layerMask = 1 << 16;
+        Collider[] colliders = Physics.OverlapSphere(transform.position, sightRange, layerMask);
+        //Debug.Log("Colliders: " + colliders.Length);
         foreach (Collider col in colliders)
         {
             Hitbox hitbox = col.GetComponent<Hitbox>();
             if (hitbox == null) continue;
-            hitbox.ZombieParent.Aggro();
+            hitbox.ZombieParent.Aggro(player);
         }
     }
 
@@ -139,7 +137,7 @@ public class ZombieController : MonoBehaviour
                 playerDiscovery += Time.deltaTime * discoverySpeed * ((sightRange - hit.distance) / sightRange);
 
                 if (playerDiscovery >= 1)
-                    SpreadAggro();
+                    SpreadAggro(player);
             }
         }
 

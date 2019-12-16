@@ -9,6 +9,8 @@ public class Weapon : ScriptableObject
     [Header("Stats")]
     public float damage;
     public int magSize;
+    public enum AmmoType { small, medium, shotgun }
+    public AmmoType ammoType;
     public float fireRate;
     public float fireRange;
     public float recoilAmmount;

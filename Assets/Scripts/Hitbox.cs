@@ -17,9 +17,9 @@ public class Hitbox : MonoBehaviour
         this.ZombieParent = zombieParent;
     }
 
-    public void Damage(float damage, Vector3 force)
+    public void Damage(float damage, Vector3 force, PlayerController player)
     {
-        ZombieParent.Damage(CalculatedDamage(damage), GetComponent<Rigidbody>(), force);
+        ZombieParent.Damage(CalculatedDamage(damage), GetComponent<Rigidbody>(), force, player);
     }
 
     public float CalculatedDamage(float damage)

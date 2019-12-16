@@ -54,7 +54,7 @@ public class ShotgunHandler : WeaponHandler
                     //            break;
                     //    }
                     float damageAfterRange = weapon.GetDamage(Vector3.Distance(transform.position, hit.point)) / pellets; //Ska jag dividera med antalet pellets? Blir enklare att räkna om jag kan göra så.
-                    hitbox.Damage(damageAfterRange, owner.cam.transform.forward * damageAfterRange * 700);
+                    hitbox.Damage(damageAfterRange, owner.cam.transform.forward * damageAfterRange * 700, owner);
                 }
             }
         }
