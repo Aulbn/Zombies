@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   magSize: 6
+  ammoType: 2
   fireRate: 1.5
   fireRange: 50
   recoilAmmount: 5
