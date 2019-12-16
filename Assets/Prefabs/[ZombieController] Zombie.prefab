@@ -621,6 +621,8 @@ MonoBehaviour:
   fov: 75
   sightRange: 20
   target: {fileID: 0}
+  playerDiscovery: 0
+  hitRange: 3
   animator: {fileID: 1998832582807879782}
 --- !u!195 &6422253397326611573
 NavMeshAgent:

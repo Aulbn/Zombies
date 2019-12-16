@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerID: 0
-  health: 0
+  health: 100
   walkSpeed: 2
   runSpeed: 5
   sprintSpeed: 8
@@ -195,6 +195,7 @@ MonoBehaviour:
   armsAnim: {fileID: 2333061585027696192}
   bodyAnim: {fileID: 289347069564026501}
   cam: {fileID: 833170507747707572}
+  aggroRange: 100
 --- !u!114 &1423467538730831347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,6 +503,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Zombie_SkeletalMesh
       objectReference: {fileID: 0}
+    - target: {fileID: -5020677284150291755, guid: 850a0e29ac275654bb7bb954c27ac289,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cd9d6a795000acc479d56d844eebfb79, type: 2}
+    - target: {fileID: -6057140222963153312, guid: 850a0e29ac275654bb7bb954c27ac289,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 073fb9ca3f1389c4b92c0da5fc80c200, type: 2}
+    - target: {fileID: -6057140222963153312, guid: 850a0e29ac275654bb7bb954c27ac289,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: 850a0e29ac275654bb7bb954c27ac289,
+        type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 29b7e5ff762ed264990c2d7f0e143351, type: 3}
     - target: {fileID: -4216859302048453862, guid: 850a0e29ac275654bb7bb954c27ac289,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -577,26 +598,6 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.15080985
       objectReference: {fileID: 0}
-    - target: {fileID: -5020677284150291755, guid: 850a0e29ac275654bb7bb954c27ac289,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: cd9d6a795000acc479d56d844eebfb79, type: 2}
-    - target: {fileID: -6057140222963153312, guid: 850a0e29ac275654bb7bb954c27ac289,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 073fb9ca3f1389c4b92c0da5fc80c200, type: 2}
-    - target: {fileID: -6057140222963153312, guid: 850a0e29ac275654bb7bb954c27ac289,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: 850a0e29ac275654bb7bb954c27ac289,
-        type: 3}
-      propertyPath: m_Avatar
-      value: 
-      objectReference: {fileID: 9000000, guid: 29b7e5ff762ed264990c2d7f0e143351, type: 3}
     m_RemovedComponents:
     - {fileID: -6057140222963153312, guid: 850a0e29ac275654bb7bb954c27ac289, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 850a0e29ac275654bb7bb954c27ac289, type: 3}

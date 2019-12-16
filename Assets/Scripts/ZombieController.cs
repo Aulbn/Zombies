@@ -14,6 +14,7 @@ public class ZombieController : MonoBehaviour
     public float sightRange = 20f;
     public PlayerController target;
     public float playerDiscovery = 0;
+    public float hitRange = 1f;
 
     public Animator animator;
     private bool ragdolling = false;
@@ -56,6 +57,24 @@ public class ZombieController : MonoBehaviour
         }
     }
 
+    public void Attack()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position + transform.forward * hitRange / 2, hitRange);
+        Debug.Log("Try hit");
+
+        foreach (Collider col in colliders)
+        {
+            Debug.Log("Got colliders");
+            PlayerController player = col.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                player.ChangeHealth(-10);
+                Debug.Log("Hit player");
+                break;
+            }
+        }
+    }
+
     public void Die(Rigidbody rigidbody, Vector3 force)
     {
         ToggleRagdoll(true);
@@ -76,7 +95,7 @@ public class ZombieController : MonoBehaviour
         }
     }
 
-    private void Aggro()
+    public void Aggro()
     {
         animator.SetBool("Aggressive", true);
         //Raycast to other Zombies and Aggro them!

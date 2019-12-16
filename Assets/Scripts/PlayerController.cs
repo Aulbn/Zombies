@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public int playerID;
 
     [Header("Stats")]
-    public float health;
+    public int health;
 
     [Header("Input")]
     public float walkSpeed = 2f;
@@ -53,6 +53,9 @@ public class PlayerController : MonoBehaviour
     private float camRotY;
     public int BodyLayerID { get { return 8 + playerID; } }
     public int ArmsLayerID { get { return 12 + playerID; } }
+
+    [Header("DEBUG")]
+    public float aggroRange = 100f;
 
     private CharacterController cc;
     private bool isPaused = false;
@@ -113,6 +116,27 @@ public class PlayerController : MonoBehaviour
 
         if (shootInput)
             activeWeapon.TryShoot();
+
+        if (Input.GetKeyDown(KeyCode.I)) //DEBUG AGGRO ALL IN RANGE - VERY INEFFICIENT!
+        {
+            Debug.Log("AGGRO!");
+            RaycastHit[] hits = Physics.SphereCastAll(transform.position, aggroRange / 2, transform.forward, 0);
+            foreach(RaycastHit hit in hits)
+            {
+                Debug.Log("Try aggro");
+                Hitbox h = hit.transform.GetComponent<Hitbox>();
+                if (h != null)
+                {
+                    h.ZombieParent.Aggro();
+                }
+            }
+        }
+
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawSphere(transform.position, aggroRange / 2);
     }
 
     private void FixedUpdate()
@@ -261,6 +285,13 @@ public class PlayerController : MonoBehaviour
         cc.transform.position = position;
         Velocity = Vector3.zero;
         cc.enabled = true;
+    }
+
+    public void ChangeHealth(int healthDiff)
+    {
+        health += healthDiff;
+        //Set health in UI?
+        //Stun?
     }
 
     private void RotationUpdate()

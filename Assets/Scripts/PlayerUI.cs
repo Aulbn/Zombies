@@ -19,7 +19,13 @@ public class PlayerUI : MonoBehaviour
     [Header("HUD")]
     [SerializeField] private TextMeshProUGUI ammoText;
     [SerializeField] private TextMeshProUGUI magText;
+    [SerializeField] private Image healthbar;
     //[SerializeField] private Image firstWeapon, secondWeapon, ammoMeter;
+
+    private void Update()
+    {
+        healthbar.fillAmount = (float)player.health / 100;
+    }
 
     public void SetUp(PlayerController player, MultiplayerEventSystem eventSystem)
     {

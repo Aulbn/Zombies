@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class ZombieWalkBehaviour : StateMachineBehaviour
+public class ZombieAttackBehaviour : StateMachineBehaviour
 {
     private ZombieController controller;
-    private Vector3 eyesPos { get { return controller.target.transform.position + Vector3.up * .8f; } }
+    private bool hasHit = false;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -15,27 +14,31 @@ public class ZombieWalkBehaviour : StateMachineBehaviour
         {
             controller = animator.transform.GetComponentInParent<ZombieController>();
         }
-        controller.agent.isStopped = false;
-        controller.target = PlayerController.GetClosestPlayer(animator.transform.position);
+        controller.agent.isStopped = true;
+        hasHit = false;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        controller.SetTarget();
-        controller.agent.SetDestination(controller.target.transform.position);
-
-        if (Vector3.Distance(controller.transform.position, controller.target.transform.position) < controller.hitRange)
+        if (animator.GetFloat("HitCurve") > 0 && !hasHit)
         {
-            animator.SetBool("AttackRange", true);
+            Debug.Log("Hajå?");
+            hasHit = true;
+            controller.Attack();
+        }
+
+        if (Vector3.Distance(controller.transform.position, controller.target.transform.position) > controller.hitRange / 2)
+        {
+            animator.SetBool("AttackRange", false);
         }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        hasHit = false;
+    }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -44,9 +47,8 @@ public class ZombieWalkBehaviour : StateMachineBehaviour
     //}
 
     // OnStateIK is called right after Animator.OnAnimatorIK()
-    override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        animator.SetLookAtPosition(eyesPos);
-        animator.SetLookAtWeight(1, 0, .8f, 0);
-    }
+    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    //{
+    //    // Implement code that sets up animation IK (inverse kinematics)
+    //}
 }
