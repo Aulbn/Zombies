@@ -177,6 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerID: 0
   health: 100
+  maxHealth: 100
   walkSpeed: 2
   runSpeed: 5
   sprintSpeed: 8
@@ -187,7 +188,7 @@ MonoBehaviour:
   starterWeapon: {fileID: 11400000, guid: daddef1d175000a4190488bcae35df08, type: 2}
   aimFOV: 50
   aimZoomSpeed: 8
-  aimAssist: 1
+  aimAssist: 0
   aimAssistRadius: 0.4
   aimAssistRange: 200
   handSocket_Arms: {fileID: 3078421803902489520}

@@ -36,6 +36,8 @@ public class UIManager : MonoBehaviour
 
     public static void SetMultiCameraLayout()
     {
+        if (PlayerController.AllPlayers.Count < 1) return;
+
         int playerCount = PlayerController.AllPlayers.Count;
         switch (playerCount)
         {
