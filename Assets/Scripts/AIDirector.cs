@@ -25,9 +25,28 @@ public class AIDirector : MonoBehaviour
         //Start wave!
     }
 
-    private IEnumerator Wave()
+    private IEnumerator Wave(int zombiesToSpawn)
     {
-        yield return null;
+        int zombiesLeft = zombiesToSpawn;
+        float interval = 0;
+        float timer = 0;
+
+        while (zombiesLeft > 0)
+        {
+            if (timer < interval)
+            {
+                timer += Time.deltaTime;
+            }
+            else
+            {
+                //Find spawner
+                //Spawn
+                //set new values
+                zombiesLeft--;
+            }
+            yield return null;
+        }
+
     }
 
 }
