@@ -6,6 +6,8 @@ public class EnemySpawner : MonoBehaviour
 {
     public void SpawnEnemy()
     {
-
+        //Instantiate
+        //Set target?
+        //Set state
     }
 }

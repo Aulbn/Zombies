@@ -6,26 +6,47 @@ public class AIDirector : MonoBehaviour
 {
     public static AIDirector Instance;
 
-    private Dictionary<PlayerController, bool> inCombat;
+    private Dictionary<PlayerController, CombatInfo> PlayerCombatInfo;
+
+    struct CombatInfo
+    {
+        public bool InCombat { get; private set; }
+        public IEnumerator WaveCoroutine { get; private set; };
+
+        public void SetCombat(bool inCombat)
+        {
+            InCombat = inCombat;
+        }
+        public void StartCombat(IEnumerator coroutine)
+        {
+            if (WaveCoroutine != null)
+            WaveCoroutine = coroutine;
+        }
+    }
 
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
 
-        inCombat = new Dictionary<PlayerController, bool>();
+        PlayerCombatInfo = new Dictionary<PlayerController, CombatInfo>();
     }
 
     public static void SetInCombat(PlayerController player, bool inCombat)
     {
-        if (!Instance.inCombat.ContainsKey(player)) Instance.inCombat.Add(player, false);
-        if (Instance.inCombat[player]) return;
+        if (!Instance.PlayerCombatInfo.ContainsKey(player)) Instance.PlayerCombatInfo.Add(player, new CombatInfo());
+        if (Instance.PlayerCombatInfo[player].InCombat) return;
 
-        Instance.inCombat[player] = inCombat;
+        Instance.PlayerCombatInfo[player].SetCombat(inCombat);
         //Start wave!
     }
 
-    private IEnumerator Wave(int zombiesToSpawn)
+    public void InitiateCombat(PlayerController player)
+    {
+        
+    }
+
+    private IEnumerator Wave(int zombiesToSpawn, PlayerController player)
     {
         int zombiesLeft = zombiesToSpawn;
         float interval = 0;
@@ -40,6 +61,7 @@ public class AIDirector : MonoBehaviour
             else
             {
                 //Find spawner
+                //player
                 //Spawn
                 //set new values
                 zombiesLeft--;
