@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("DEBUG")]
     public float aggroRange = 100f;
-
+    public bool hasHealthKit = false;
     private CharacterController cc;
     private bool isPaused = false;
     private PlayerInput playerInput;
@@ -82,6 +82,7 @@ public class PlayerController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         playerInput.actions.FindAction("Shoot", uh).performed += ctx => shootInput = true;
         playerInput.actions.FindAction("Shoot", uh).canceled += ctx => shootInput = false;
+
 
         SetCullingMasks();
         SetUpUI();

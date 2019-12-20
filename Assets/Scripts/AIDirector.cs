@@ -11,7 +11,7 @@ public class AIDirector : MonoBehaviour
     struct CombatInfo
     {
         public bool InCombat { get; private set; }
-        public IEnumerator WaveCoroutine { get; private set; };
+        public IEnumerator WaveCoroutine { get; private set; }
 
         public void SetCombat(bool inCombat)
         {

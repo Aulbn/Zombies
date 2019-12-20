@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 3259781229843689663, guid: 3bdd5b9140e357b40ad24c379858911e,
         type: 3}
       propertyPath: m_Name
-      value: Floor (102)
+      value: Floor Lab variant
       objectReference: {fileID: 0}
     - target: {fileID: 3259781229843689663, guid: 3bdd5b9140e357b40ad24c379858911e,
         type: 3}
@@ -77,5 +77,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8d307de7650d8804e83e41e4cb5da24b, type: 2}
+    - target: {fileID: 3819553643875763299, guid: 3bdd5b9140e357b40ad24c379858911e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3bdd5b9140e357b40ad24c379858911e, type: 3}

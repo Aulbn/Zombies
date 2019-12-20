@@ -49,7 +49,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: cc046203b91c74148b2e3ba6ad6078a5,
         type: 3}
       propertyPath: m_Name
-      value: M_Doorway
+      value: M_Doorway Variant
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: cc046203b91c74148b2e3ba6ad6078a5,
         type: 3}
@@ -111,6 +111,18 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 241a99b4acc614943aacc5c90c896ac2, type: 2}
+    - target: {fileID: -1504981713932161579, guid: cc046203b91c74148b2e3ba6ad6078a5,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 8368722655750445499, guid: 9935a5fcca3de804496adab3c0bb77ec,
+        type: 3}
+    - target: {fileID: -1504981713932161579, guid: cc046203b91c74148b2e3ba6ad6078a5,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 8368722655750445499, guid: 9935a5fcca3de804496adab3c0bb77ec,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc046203b91c74148b2e3ba6ad6078a5, type: 3}
 --- !u!1 &1270580339813974835 stripped
