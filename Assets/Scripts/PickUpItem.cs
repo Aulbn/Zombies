@@ -2,35 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUpHP : Interactable
+public class PickUpItem : Interactable
 {
     public enum ItemType
     {
-        Healthkit,
-        SomethingElse
-    };
+        Health, Ammo, Destroy
+    }
     public ItemType itemType;
+
+
     public override void Interaction(PlayerController player)
     {
         if(PickUp(itemType, player))
             Destroy(gameObject);
     }
+
     private bool PickUp(ItemType type, PlayerController player)
     {
-      bool PickedUp = false;
+      bool pickedUp = false;
+
         switch (type)
         {
-            case ItemType.Healthkit:
-                if (player.hasHealthKit == false)
+            case ItemType.Health:
+                if (!player.hasHealthKit)
                 {
                     player.hasHealthKit = true;
-                    PickedUp = true;
+                    pickedUp = true;
                 }
                 break;
-            case ItemType.SomethingElse:
+
+            case ItemType.Ammo:
+                
                 break;
         }
 
-        return PickedUp;
+        return pickedUp;
     }
 }

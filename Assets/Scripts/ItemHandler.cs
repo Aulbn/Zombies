@@ -7,6 +7,11 @@ public class ItemHandler : MonoBehaviour
 {
     protected PlayerController owner;
     
+    public virtual void TryUse()
+    {
+
+    }
+
     protected IEnumerator WaitForAction(float waitTime, Action action)
     {
         yield return new WaitForSeconds(waitTime);

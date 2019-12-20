@@ -64,7 +64,7 @@ public class WeaponHandler : ItemHandler
         rememberShootTimer = 0;
     }
 
-    public void TryShoot()
+    public override void TryUse()
     {
         rememberShootTimer = rememberShootTime;
     }

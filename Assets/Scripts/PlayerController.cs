@@ -28,13 +28,16 @@ public class PlayerController : MonoBehaviour
     public Vector3 LookDirection { get { return cam.transform.position + cam.transform.forward; } }
 
     [Header("Weapon")]
-    public Weapon starterWeapon;
-    private WeaponHandler activeWeapon, secondWeapon;
     public float aimFOV;
     private float defaultFOV;
     public float aimZoomSpeed;
     public bool IsAiming { get; private set; }
     public float AimValue { get; private set; }
+
+    [Header("Inventory")]
+    public Weapon starterWeapon;
+    private WeaponHandler activeWeapon, secondWeapon;
+    public bool hasHealthKit;
     public Dictionary<Weapon.AmmoType, int> ammoStash;
 
     [Header("Aim Assistance")]
@@ -58,7 +61,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("DEBUG")]
     public float aggroRange = 100f;
-    public bool hasHealthKit = false;
     private CharacterController cc;
     private bool isPaused = false;
     private PlayerInput playerInput;
@@ -122,7 +124,7 @@ public class PlayerController : MonoBehaviour
         InteractionUpdate();
 
         if (shootInput)
-            activeWeapon.TryShoot();
+            activeWeapon.TryUse();
 
         if (Input.GetKeyDown(KeyCode.I)) //DEBUG AGGRO ALL IN RANGE - VERY INEFFICIENT!
         {
