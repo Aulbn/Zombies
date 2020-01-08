@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public float walkSpeed = 2f;
     public float runSpeed = 5f;
     public float sprintSpeed = 8f;
+    public float MovementSpeed { get; private set; }
     public float jumpStrength = 5f;
     public float gravity = 20f;
     public float mouseSensitivity = 1f;
@@ -26,6 +27,8 @@ public class PlayerController : MonoBehaviour
     private bool shootInput;
     public Vector3 Velocity { get; private set; }
     public Vector3 LookDirection { get { return cam.transform.position + cam.transform.forward; } }
+    public bool IsCrouching { get; private set; }
+    private IEnumerator StandUpCoroutine;
 
     [Header("Weapon")]
     public float aimFOV;
@@ -84,7 +87,10 @@ public class PlayerController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         playerInput.actions.FindAction("Shoot", uh).performed += ctx => shootInput = true;
         playerInput.actions.FindAction("Shoot", uh).canceled += ctx => shootInput = false;
-
+        playerInput.actions.FindAction("Sprint", uh).performed += ctx => ToggleRun(true);
+        playerInput.actions.FindAction("Sprint", uh).canceled += ctx => ToggleRun(false);
+        playerInput.actions.FindAction("Crouch", uh).performed += ctx => ToggleCrouch(true);
+        playerInput.actions.FindAction("Crouch", uh).canceled += ctx => ToggleCrouch(false);
 
         SetCullingMasks();
         SetUpUI();
@@ -112,6 +118,7 @@ public class PlayerController : MonoBehaviour
         defaultFOV = cam.fieldOfView;
 
         SetPosition(GameManager.Instance.playerSpawn.position);
+        MovementSpeed = runSpeed;
 
         AddWeapon(starterWeapon);
         PickUpAmmo(starterWeapon.ammoType, 50); //Test start ammo
@@ -125,6 +132,14 @@ public class PlayerController : MonoBehaviour
 
         if (shootInput)
             activeWeapon.TryUse();
+
+        if (MovementSpeed == sprintSpeed)
+        {
+            if (Mathf.Abs(movementInput.x) > 0.75f || movementInput.y < 0)
+            {
+                ToggleRun(false);
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.I)) //DEBUG AGGRO ALL IN RANGE - VERY INEFFICIENT!
         {
@@ -216,6 +231,12 @@ public class PlayerController : MonoBehaviour
         PlayerUI.SetAmmoText(activeWeapon);
     }
 
+    public void OnSprint()
+    {
+        
+    }
+
+
     //------------------------------------------Functions-----------------------------------------------
 
     private WeaponHandler SpawnWeapon(Weapon weapon)
@@ -298,6 +319,43 @@ public class PlayerController : MonoBehaviour
         //Stun?
     }
 
+    private void ToggleRun(bool isRunning)
+    {
+        MovementSpeed = isRunning ? sprintSpeed : runSpeed;
+    }
+
+    private void ToggleCrouch(bool isCrouching)
+    {
+        if (isCrouching && !IsCrouching)
+        {
+            cc.height = cc.height / 2;
+            MovementSpeed = walkSpeed;
+            IsCrouching = true;
+        }
+        else if (IsCrouching)
+        {
+            if (StandUpCoroutine != null)
+                StopCoroutine(StandUpCoroutine);
+            StartCoroutine(StandUpCoroutine = TryStandUp());
+        }
+    }
+
+    private IEnumerator TryStandUp()
+    {
+        RaycastHit hit;
+        while (true)
+        {
+            if (!Physics.Raycast(cc.bounds.center + Vector3.up * cc.height/2, Vector3.up, out hit, cc.height))
+            {
+                break;
+            }
+            yield return new WaitForSeconds(0.2f);
+        }
+        cc.height = cc.height * 2;
+        MovementSpeed = runSpeed;
+        IsCrouching = false;
+    }
+
     private void RotationUpdate()
     {
         Vector2 input = lookInput * mouseSensitivity;
@@ -320,7 +378,7 @@ public class PlayerController : MonoBehaviour
     private void MovementUpdate()
     {
         if (cc.isGrounded)
-            Velocity = Velocity.y * transform.up + (movementInput.y * transform.forward + movementInput.x * transform.right) * (IsAiming ? walkSpeed : runSpeed);
+            Velocity = Velocity.y * transform.up + (movementInput.y * transform.forward + movementInput.x * transform.right) * MovementSpeed;
         else
             Velocity += Vector3.down * gravity * Time.deltaTime; //Gravity
 
@@ -373,6 +431,7 @@ public class PlayerController : MonoBehaviour
     private void AimToggle()
     {
         IsAiming = !IsAiming;
+        MovementSpeed = IsAiming ? walkSpeed : runSpeed;
         armsAnim.SetBool("Aiming", IsAiming);
         bodyAnim.SetBool("Aiming", IsAiming);
     }
