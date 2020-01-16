@@ -181,13 +181,15 @@ MonoBehaviour:
   walkSpeed: 2
   runSpeed: 5
   sprintSpeed: 8
-  jumpStrength: 7
+  jumpStrength: 5.5
   gravity: 20
+  crouchHeight: 1
   mouseSensitivity: 2
   lookInput: {x: 0, y: 0}
-  starterWeapon: {fileID: 11400000, guid: daddef1d175000a4190488bcae35df08, type: 2}
   aimFOV: 50
   aimZoomSpeed: 8
+  starterWeapon: {fileID: 11400000, guid: daddef1d175000a4190488bcae35df08, type: 2}
+  hasHealthKit: 0
   aimAssist: 0
   aimAssistRadius: 0.4
   aimAssistRange: 200
@@ -499,6 +501,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 833170508265535864}
     m_Modifications:
+    - target: {fileID: -927199367670048503, guid: 850a0e29ac275654bb7bb954c27ac289,
+        type: 3}
+      propertyPath: m_Name
+      value: Zombie_SkeletalMesh
+      objectReference: {fileID: 0}
     - target: {fileID: -5020677284150291755, guid: 850a0e29ac275654bb7bb954c27ac289,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -519,11 +526,6 @@ PrefabInstance:
       propertyPath: m_Avatar
       value: 
       objectReference: {fileID: 9000000, guid: 29b7e5ff762ed264990c2d7f0e143351, type: 3}
-    - target: {fileID: -927199367670048503, guid: 850a0e29ac275654bb7bb954c27ac289,
-        type: 3}
-      propertyPath: m_Name
-      value: Zombie_SkeletalMesh
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 850a0e29ac275654bb7bb954c27ac289,
         type: 3}
       propertyPath: m_LocalPosition.x

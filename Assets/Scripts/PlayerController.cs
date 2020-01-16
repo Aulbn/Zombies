@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     public float MovementSpeed { get; private set; }
     public float jumpStrength = 5f;
     public float gravity = 20f;
+    public float crouchHeight;
+    private float standHeight;
     public float mouseSensitivity = 1f;
     private PlayerControls controls;
     private Vector2 movementInput;
@@ -116,6 +118,7 @@ public class PlayerController : MonoBehaviour
         defaultArmAimHeight = armsAnim.transform.localPosition.y;
         Cursor.lockState = CursorLockMode.Locked;
         defaultFOV = cam.fieldOfView;
+        standHeight = cc.height;
 
         SetPosition(GameManager.Instance.playerSpawn.position);
         MovementSpeed = runSpeed;
@@ -231,11 +234,6 @@ public class PlayerController : MonoBehaviour
         PlayerUI.SetAmmoText(activeWeapon);
     }
 
-    public void OnSprint()
-    {
-        
-    }
-
 
     //------------------------------------------Functions-----------------------------------------------
 
@@ -328,7 +326,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isCrouching && !IsCrouching)
         {
-            cc.height = cc.height / 2;
+            cc.height = crouchHeight;
             MovementSpeed = walkSpeed;
             IsCrouching = true;
         }
@@ -345,13 +343,13 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         while (true)
         {
-            if (!Physics.Raycast(cc.bounds.center + Vector3.up * cc.height/2, Vector3.up, out hit, cc.height))
+            if (!Physics.Raycast(cc.bounds.center + Vector3.up * cc.height/2, Vector3.up, out hit, (standHeight - crouchHeight)))
             {
                 break;
             }
             yield return new WaitForSeconds(0.2f);
         }
-        cc.height = cc.height * 2;
+        cc.height = standHeight;
         MovementSpeed = runSpeed;
         IsCrouching = false;
     }
