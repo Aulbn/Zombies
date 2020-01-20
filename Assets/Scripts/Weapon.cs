@@ -40,6 +40,7 @@ public class Weapon : ScriptableObject
     public WeaponHandler SpawnWeapon(PlayerController player, Transform handParent, Transform bodyParent)
     {
         WeaponHandler w = Instantiate(weaponHandlerPrefab, player.transform, false).GetComponent<WeaponHandler>();
+        //w.transform.rotation = Quaternion.identity;
         w.weaponHand.SetParent(handParent);
         w.weaponBody.SetParent(bodyParent);
         return w;
