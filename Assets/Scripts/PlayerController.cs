@@ -87,8 +87,10 @@ public class PlayerController : MonoBehaviour
 
         bool uh = false; //Needed a bool for some reason
         playerInput = GetComponent<PlayerInput>();
-        playerInput.actions.FindAction("Shoot", uh).performed += ctx => shootInput = true;
-        playerInput.actions.FindAction("Shoot", uh).canceled += ctx => shootInput = false;
+        //playerInput.actions.FindAction("Shoot", uh).performed += ctx => shootInput = true;
+        //playerInput.actions.FindAction("Shoot", uh).canceled += ctx => shootInput = false;
+        playerInput.actions.FindAction("Shoot", uh).performed += ctx => ToggleShooting(true);
+        playerInput.actions.FindAction("Shoot", uh).canceled += ctx => ToggleShooting(false);
         playerInput.actions.FindAction("Sprint", uh).performed += ctx => ToggleRun(true);
         playerInput.actions.FindAction("Sprint", uh).canceled += ctx => ToggleRun(false);
         playerInput.actions.FindAction("Crouch", uh).performed += ctx => ToggleCrouch(true);
@@ -315,6 +317,13 @@ public class PlayerController : MonoBehaviour
         health += healthDiff;
         //Set health in UI?
         //Stun?
+    }
+
+    private void ToggleShooting(bool isShooting)
+    {
+        shootInput = isShooting;
+        activeWeapon.SetAnimatorShootingBool(isShooting);
+        Debug.Log(isShooting ? "Start" : "Stop");
     }
 
     private void ToggleRun(bool isRunning)

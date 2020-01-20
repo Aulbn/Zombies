@@ -23,6 +23,7 @@ public class WeaponHandler : ItemHandler
     [Header("Animation")]
     public float armAimHeight;
     private bool isUnholstered = true;
+    private Animator handAnimator, bodyAnimator;
 
     //private InventoryItemDisplay uiElement;
     private float fireRateTimer = 0;
@@ -31,6 +32,8 @@ public class WeaponHandler : ItemHandler
     private void Start()
     {
         audioSource = gameObject.AddComponent<MultiAudioSource>();
+        handAnimator = weaponHand.GetComponent<Animator>();
+        bodyAnimator = weaponBody.GetComponent<Animator>();
     }
 
     private void Update()
@@ -175,4 +178,12 @@ public class WeaponHandler : ItemHandler
         Destroy(weaponBody.gameObject);
         Destroy(gameObject);
     }
+
+    public void SetAnimatorShootingBool(bool value)
+    {
+        if (handAnimator == null) return;
+        handAnimator.SetBool("Shooting", value);
+        bodyAnimator.SetBool("Shooting", value);
+    }
+
 }
