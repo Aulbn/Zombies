@@ -125,6 +125,7 @@ public class ZombieController : MonoBehaviour
 
         foreach(PlayerController player in PlayerController.AllPlayers)
         {
+            //Debug.Log("Player " + player);
             if (Vector3.Distance(player.transform.position, transform.position) > sightRange) continue;
             Vector3 playerDir = ((player.transform.position + Vector3.down / 2) - transform.position).normalized;
             if (Vector3.Angle(transform.forward, playerDir) > fov / 2) continue;
